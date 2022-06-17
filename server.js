@@ -4,10 +4,16 @@ function requireHTTPS(req, res, next) {
         return res.redirect('https://' + req.get('host') + req.url);
     }
     next();
-}const express = require('express');
-const app = express();
-app.use(requireHTTPS);
+}
 
-app.use(express.static('./dist/<name-on-package.json>'));
+const express = require('express');
+const app = express();
+
+app.use(requireHTTPS);
+app.use(express.static('./dist/taskfront'));
+
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', {root: 'dist/taskfront/'}),
+);
 
 app.listen(process.env.PORT || 8080);
