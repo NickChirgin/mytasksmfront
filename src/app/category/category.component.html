@@ -1,6 +1,4 @@
 <div class="category">
   <p>{{ title }}</p>
-  <app-todo></app-todo>
-  <app-todo></app-todo>
-  <app-todo></app-todo>
+  <app-todo *ngFor="let todo of todos" [text]="todo"></app-todo>
 </div>

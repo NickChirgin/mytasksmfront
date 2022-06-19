@@ -1,3 +1,8 @@
-<mat-checkbox aria-label="123"
-  ><span>{{ title }}</span></mat-checkbox
+<mat-checkbox
+  aria-label="123"
+  [checked]="text.isDone()"
+  (click)="clickHandler()"
+  ><span [ngClass]="checked ? 'done' : ''">{{
+    text.getText()
+  }}</span></mat-checkbox
 >

@@ -1,1 +1,45 @@
-<p>form works!</p>
+<form
+  [formGroup]="name"
+  type="submit"
+  method="post"
+  action="https://guarded-citadel-88203.herokuapp.com/todos"
+>
+  <label for="text">New todo</label>
+  <input type="text" id="text" formControlName="text" />
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select
+      #matSelect
+      [(ngModel)]="selected"
+      [ngModelOptions]="{ standalone: true }"
+    >
+      <mat-option
+        (click)="shortenedForm()"
+        *ngFor="let currentCategory of data"
+        [value]="currentCategory.getTitle()"
+        >{{ currentCategory.getTitle() }}</mat-option
+      >
+      <mat-option value="AddNewCategory" (click)="extendForm()"
+        >Add category</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <label *ngIf="condition" for="title">New category</label>
+  <input
+    *ngIf="condition"
+    type="text"
+    id="title"
+    formControlName="newCategory"
+  />
+  <div class="buttons">
+    <button mat-raised-button [mat-dialog-close]="true">Cancel</button>
+    <button
+      mat-raised-button
+      type="submit"
+      (click)="createTodo()"
+      [mat-dialog-close]="true"
+    >
+      Ok
+    </button>
+  </div>
+</form>

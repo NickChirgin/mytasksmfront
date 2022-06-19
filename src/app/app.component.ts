@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Category } from './Category';
 import { Todos } from './Todos';
-import {  deserializeArray, instanceToInstance, instanceToPlain, plainToClass, plainToInstance } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
+import  {BehaviorSubject, Observable, of, switchMap } from 'rxjs'
 
 
 
@@ -15,20 +16,19 @@ import {  deserializeArray, instanceToInstance, instanceToPlain, plainToClass, p
 
 export class AppComponent implements OnInit {
   title = 'front';
-  categories: Category[] = [];
+  categories: Category[] = []
   todos: Todos[] = [];
+
   
   headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*','content-type': 'application/json'}  )
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private ref: ChangeDetectorRef){}
 
   ngOnInit() {
       this.http.get<Category[]>('https://guarded-citadel-88203.herokuapp.com/projects').subscribe(data => {
         data.map(cat => this.categories.push(plainToInstance(Category, cat)))
-
-        this.categories.forEach(el => console.log(el.getTitle()))
+        
     });
-      
     };
-}
 
+  }
 

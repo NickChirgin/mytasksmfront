@@ -1,7 +1,8 @@
-<app-header></app-header>
+<app-header [categories]="categories"></app-header>
 <div class="main">
   <app-category
     *ngFor="let cat of categories"
     [title]="cat.getTitle()"
+    [todos]="cat.getTodos()"
   ></app-category>
 </div>

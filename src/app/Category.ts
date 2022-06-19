@@ -16,5 +16,9 @@ export class Category {
       getTitle() {
       return this.title
     }
+      @Expose()
+      getTodos() {
+      return this.tasks
+  }
   }
   
