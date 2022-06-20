@@ -5,6 +5,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { Category } from '../Category';
+import { EventEmitterService } from '../event-emmiter.service';
+
 
 
 
@@ -22,7 +24,7 @@ export class FormComponent implements OnInit {
   value?: string
   add: string = '123'
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private ref: ChangeDetectorRef) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private http: HttpClient, private eventEmmiterService: EventEmitterService) { }
   condition: boolean = false
   ngOnInit(): void {
     this.name = new FormGroup({
@@ -46,8 +48,11 @@ export class FormComponent implements OnInit {
   createTodo(){
     const body = {title: this.selected === "AddNewCategory"? this.name.value.newCategory : this.selected, text: this.name.value.text}
     this.http.post('https://guarded-citadel-88203.herokuapp.com/todos/', body).subscribe(data => {message: 'ok'})
-    window.location.reload
+    this.categories = []
+    this.eventEmmiterService.onFirstComponentButtonClick(this.categories);
     };
+
+
   }
   
   
