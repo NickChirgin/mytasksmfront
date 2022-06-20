@@ -45,11 +45,13 @@ export class FormComponent implements OnInit {
     console.log(this.selected, typeof(this.selected))
   }
 
-  createTodo(){
+ async createTodo(){
     const body = {title: this.selected === "AddNewCategory"? this.name.value.newCategory : this.selected, text: this.name.value.text}
-    this.http.post('https://guarded-citadel-88203.herokuapp.com/todos/', body).subscribe(data => {message: 'ok'})
-    this.categories = []
-    this.eventEmmiterService.onFirstComponentButtonClick(this.categories);
+    this.http.post('https://guarded-citadel-88203.herokuapp.com/todos/', body).subscribe()
+    
+    setTimeout(() => {
+      this.eventEmmiterService.onFirstComponentButtonClick(this.categories);
+    }, 150)
     };
 
 
